@@ -1,0 +1,20 @@
+// Copyright IBM Corp. and LoopBack contributors 2018,2020. All Rights Reserved.
+// Node module: @loopback/example-todo
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
+
+import {inject} from '@loopback/core';
+import {DefaultCrudRepository} from '@loopback/repository';
+import {AuthDbDataSource} from '../datasources';
+import {Todo, TodoRelations} from '../models';
+import {AuthDbSourceName} from '@sourceloop/authentication-service';
+
+export class TodoRepository extends DefaultCrudRepository<
+  Todo,
+  typeof Todo.prototype.id,
+  TodoRelations
+> {
+  constructor(@inject(`datasources.${AuthDbSourceName}`) dataSource: AuthDbDataSource) {
+    super(Todo, dataSource);
+  }
+}
